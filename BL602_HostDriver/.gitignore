@@ -71,3 +71,4 @@ fullmac/bl_strs.c
 fullmac/bl_txq.c
 fullmac/bl_utils.c
 fullmac/bl_v7.c
+fullmac/bl_fdrv.*
