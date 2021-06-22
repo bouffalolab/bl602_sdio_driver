@@ -52,8 +52,7 @@
 #define DMA_ALIGNMENT	64
 	
 	/** Macros for Data Alignment : address */
-#define ALIGN_ADDR(p, a)	\
-		((((uint32_t)(p)) + (((uint32_t)(a)) - 1)) & ~(((uint32_t)(a)) - 1))
+#define ALIGN_ADDR(p, a)	PTR_ALIGN(p, a)
 
 /**
  * struct bl_bcn - Information of the beacon in used (AP mode)
