@@ -881,12 +881,14 @@ static const struct iw_priv_args bl_iw_priv_args[] = {
    will only process stand/priv ioctl and ignore old driver API (ndo_do_ioctl).
 */
 static const struct iw_handler_def bl_iw_handler = {
+    standard: (iw_handler *)bl_iw_std_hdl_array,
     num_standard: sizeof(bl_iw_std_hdl_array) / sizeof(iw_handler),
+#ifdef CONFIG_WEXT_PRIV
     num_private:  sizeof(bl_iw_priv_hdl_array) / sizeof(iw_handler),
     num_private_args: sizeof(bl_iw_priv_args) / sizeof(struct iw_priv_args),
-    standard: (iw_handler *)bl_iw_std_hdl_array,
     private:  (iw_handler *)bl_iw_priv_hdl_array,
     private_args: (struct iw_priv_args *)bl_iw_priv_args,
+#endif
 };
 
 static const struct net_device_ops bl_netdev_ops = {
@@ -909,8 +911,9 @@ static void bl_netdev_setup(struct net_device *dev)
 #else
     dev->needs_free_netdev = true;
 #endif
+#ifdef CONFIG_WIRELESS_EXT
     dev->wireless_handlers = &bl_iw_handler;
-
+#endif
     dev->watchdog_timeo = BL_TX_LIFETIME_MS;
 
     dev->needed_headroom = sizeof(struct bl_txhdr) + BL_SWTXHDR_ALIGN_SZ;
